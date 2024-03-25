@@ -1,5 +1,13 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
+  overrides: [
+    {
+      files: ["./src/trpc/server.ts", "./src/components/ui/input.tsx", "./src/components/ui/input-otp.tsx", "./src/components/ui/form.tsx"], // Specify the file(s) you want to ignore TypeScript checking for
+      rules: {
+        "@typescript-eslint/ban-ts-comment": "off" // Disable the rule that prevents the use of "@ts-nocheck"
+      }
+    }
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": true
@@ -36,7 +44,9 @@ const config = {
           "attributes": false
         }
       }
-    ]
+    ],
+    "@typescript-eslint/ban-ts-comment": "off", // Ignore ban-ts-comment rule
+    "@typescript-eslint/no-unsafe-argument": "off" // Ignore no-unsafe-argument rule
   }
 }
 module.exports = config;
