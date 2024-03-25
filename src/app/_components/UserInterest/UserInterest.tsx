@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import { Alert } from '~/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
@@ -98,12 +98,10 @@ interface PaginationProps {
 export const Pagination: React.FC<PaginationProps> = ({ totalCount, itemsPerPage, currentPage, setCurrentPage }) => {
     const totalPages: number = Math.ceil(totalCount / itemsPerPage);
 
-    const handlePageClick = (event) => {
-        const selectedPage: number = event.selected + 1;
+    const handlePageClick = (selected: number) => {
+        const selectedPage = selected + 1;
         setCurrentPage(selectedPage);
     };
-
-
 
     return (
         <ReactPaginate
@@ -111,7 +109,7 @@ export const Pagination: React.FC<PaginationProps> = ({ totalCount, itemsPerPage
             className='flex gap-3 items-center flex-wrap'
             breakLabel="..."
             nextLabel=">"
-            onPageChange={handlePageClick}
+            onPageChange={({ selected }) => handlePageClick(selected)}
             pageRangeDisplayed={5}
             pageCount={totalPages}
             previousLabel="<"

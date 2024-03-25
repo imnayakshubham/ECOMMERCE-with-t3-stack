@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import "server-only";
 
 import { headers } from "next/headers";

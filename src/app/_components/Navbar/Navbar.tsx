@@ -4,7 +4,6 @@ import { UserContext } from 'Context/UserContext';
 import Link from 'next/link';
 import React, { useContext } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '~/components/ui/dropdown-menu';
-import { getCurrentUser } from '~/lib/utils';
 import { api } from '~/trpc/react';
 
 export const SearchIcon = () => {

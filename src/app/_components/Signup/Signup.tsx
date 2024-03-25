@@ -63,9 +63,11 @@ export const Signup = () => {
             console.error({ error });
         },
         onSuccess: (data) => {
-            setUser(data)
-            if (!data.is_verified) {
-                router.push('/verify-email')
+            if (data) {
+                setUser(data)
+                if (!data.is_verified) {
+                    router.push('/verify-email')
+                }
             }
         },
     });

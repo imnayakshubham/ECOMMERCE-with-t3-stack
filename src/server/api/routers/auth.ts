@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { Resend } from "resend";
-const resend = new Resend(process.env.RESEND_KEY!);
+const resend = new Resend(process.env.RESEND_KEY);
 
 import { z } from "zod";
 import { EmailVerification } from "~/components/EmailTemplates/VerifyOtpEmailTemplate";

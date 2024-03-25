@@ -1,7 +1,5 @@
 "use client";
-import { getCookie, getCookies } from 'cookies-next';
-
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 
 export type UserType = {
@@ -11,8 +9,16 @@ export type UserType = {
     is_verified: boolean;
     is_admin: boolean;
 }
+interface UserContextType {
+    user: UserType | null;
+    setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+}
 
-export const UserContext = createContext({});
+export const UserContext = createContext<UserContextType>({
+    user: null,
+    setUser: () => { throw new Error("setUser must be implemented"); }
+});
+
 export function UserContextProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<UserType | null>(null);
 
@@ -22,8 +28,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         if (!userInfo.isPending && userInfo.data) {
-            const data = (userInfo.data ?? null) as UserType
-            setUser(data)
+            setUser(userInfo.data)
         }
     }, [userInfo])
 

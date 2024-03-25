@@ -4,6 +4,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from 'next/server'
+import type { UserType } from "Context/UserContext";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -14,11 +15,6 @@ const secretKey = process.env.JWT_SECRETKEY ?? "secret";
 const key = new TextEncoder().encode(secretKey);
 const jwtAlgorithm = process.env.JWT_ALGORITHM ?? "HS256";
 
-type UserType = {
-  id: string;
-  user_email: string;
-  user_name: string;
-}
 
 type EncryptPayloadType = {
   user: {
@@ -80,7 +76,7 @@ export async function updateSession(request: NextRequest) {
     const res = NextResponse.next();
     res.cookies.set({
       name: "session",
-      value: await encrypt(parsed),
+      value: await encrypt({ user: parsed.user as UserType, expires: parsed.expires as number }),
       httpOnly: true,
       expires: parsed.expires as number,
     });
