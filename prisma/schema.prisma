@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        String      @id @unique @default(uuid())
+    user_email     String   @unique
+    user_name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    is_verified Boolean @default(false)
+    is_admin Boolean @default(false)
+    password  String
+    user_access    Boolean @default(true)
+}
+
+
+model UserVerification {
+    id       String      @id @default(uuid())
+    user_id   String      
+    otp     String     
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    access    Boolean @default(true)
+}
+
+model Category {
+    category_id String @id @default(uuid())
+    category_name String
+    createdAt DateTime @default(now())
+    description String?
+}
+
+
+model UserInterestedCategory {
+    id String @id @default(uuid())
+    user_id String
+    category_ids String[] 
+    updatedAt DateTime @updatedAt
+}
